@@ -4,9 +4,8 @@ from __future__ import unicode_literals
 import os
 import json
 
-from wx.lib.pubsub import setupkwargs, pub
-
 from controller.i18n import _
+from controller.pubsub import pubsub
 
 class SettingsException(Exception):
     def __init__(self, message, args=None):
@@ -30,10 +29,10 @@ class Settings(object):
     _settings = {}
 
     def Pub(self, topic, **kwargs):
-        pub.sendMessage(str('%s.%s' % (self._name, topic)), **kwargs)
+        pubsub.publish('%s.%s' % (self._name, topic), **kwargs)
 
     def Sub(self, topic, callback):
-        pub.subscribe(callback, topic)
+        pubsub.subscribe(topic, callback)
 
     def Error(self, message, args=None):
         if args is not None:

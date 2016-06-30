@@ -2,9 +2,9 @@
 from __future__ import unicode_literals
 
 import wx
-from wx.lib.pubsub import setupkwargs, pub
 
 from controller.i18n import _
+from controller.pubsub import pubsub
 
 class FrameMixin(object):
     _name = 'frame_mixin'
@@ -13,10 +13,10 @@ class FrameMixin(object):
         pass
 
     def Pub(self, topic, **kwargs):
-        pub.sendMessage(str('%s.%s' % (self._name, topic)), **kwargs)
+        pubsub.publish('%s.%s' % (self._name, topic), **kwargs)
 
     def Sub(self, topic, callback):
-        pub.subscribe(callback, topic)
+        pubsub.subscribe(topic, callback)
 
     def Text(self, text, args=None):
         if args is not None:

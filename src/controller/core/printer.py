@@ -6,9 +6,9 @@ from threading import Event as Flag
 
 from serial.tools import list_ports as list_ports
 from serial import Serial, SerialException
-from wx.lib.pubsub import setupkwargs, pub
 
 from controller.i18n import _
+from controller.pubsub import pubsub
 from controller.core.daemon import Daemon
 
 def ListPrinters():
@@ -89,10 +89,10 @@ class Printer(object):
         self._pause = Flag()
 
     def Pub(self, topic, **kwargs):
-        pub.sendMessage(str('%s.%s' % (self._name, topic)), **kwargs)
+        pubsub.publish('%s.%s' % (self._name, topic), **kwargs)
 
     def Sub(self, topic, callback):
-        pub.subscribe(callback, topic)
+        pubsub.subscribe(topic, callback)
 
     def Error(self, message, args=None):
         if args is not None:
