@@ -89,7 +89,7 @@ class Printer(object):
         self._pause = Flag()
 
     def Pub(self, topic, **kwargs):
-        pub.sendMessage('%s.%s' % (self._name, topic), **kwargs)
+        pub.sendMessage(str('%s.%s' % (self._name, topic)), **kwargs)
 
     def Sub(self, topic, callback):
         pub.subscribe(callback, topic)

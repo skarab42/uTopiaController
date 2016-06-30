@@ -44,7 +44,7 @@ class Project(object):
         self._settings = ProjectSettings()
 
     def Pub(self, topic, **kwargs):
-        pub.sendMessage('%s.%s' % (self._name, topic), **kwargs)
+        pub.sendMessage(str('%s.%s' % (self._name, topic)), **kwargs)
 
     def Sub(self, topic, callback):
         pub.subscribe(callback, topic)
