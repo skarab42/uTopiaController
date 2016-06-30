@@ -1,0 +1,72 @@
+{
+    "lastProject": "C:\\Users\\skarab\\Desktop\\\u00b5TopiaController\\projects\\SLAcer",
+    "layersGroup.1": {
+        "enable": false,
+        "exposureTime": 50000,
+        "layers": 0
+    },
+    "layersGroup.2": {
+        "enable": false,
+        "exposureTime": 25000,
+        "layers": 2
+    },
+    "layersGroup.3": {
+        "enable": false,
+        "exposureTime": 10000,
+        "layers": 2
+    },
+    "presets": {
+        "Defaults": {
+            "layersGroup.1": {
+                "enable": true,
+                "exposureTime": 50001,
+                "layers": 2
+            },
+            "layersGroup.2": {
+                "enable": true,
+                "exposureTime": 25000,
+                "layers": 2
+            },
+            "layersGroup.3": {
+                "enable": true,
+                "exposureTime": 10000,
+                "layers": 2
+            }
+        },
+        "Defaults2": {
+            "layersGroup.1": {
+                "enable": true,
+                "exposureTime": 50000,
+                "layers": 2
+            },
+            "layersGroup.2": {
+                "enable": true,
+                "exposureTime": 25000,
+                "layers": 2
+            },
+            "layersGroup.3": {
+                "enable": false,
+                "exposureTime": 10000,
+                "layers": 0
+            }
+        },
+        "None": {
+            "layersGroup.1": {
+                "enable": false,
+                "exposureTime": 50000,
+                "layers": 0
+            },
+            "layersGroup.2": {
+                "enable": false,
+                "exposureTime": 25000,
+                "layers": 2
+            },
+            "layersGroup.3": {
+                "enable": false,
+                "exposureTime": 10000,
+                "layers": 2
+            }
+        }
+    },
+    "presetsName": "None"
+}
