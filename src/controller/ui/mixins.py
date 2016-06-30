@@ -48,8 +48,9 @@ class FrameMixin(object):
         self.Alert(text, args)
 
     def SetButtonBitmap(self, button, name):
-        # bitmap = wx.Bitmap('./assets/%s.png' % name)
-        # button.SetBitmapLabel(bitmap)
-        # button.SetBitmapFocus(bitmap)
-        # button.SetBitmapHover(bitmap)
-        pass
+        if wx.__version__ < 3:
+            pass
+        bitmap = wx.Bitmap('./assets/%s.png' % name)
+        button.SetBitmapLabel(bitmap)
+        button.SetBitmapFocus(bitmap)
+        button.SetBitmapHover(bitmap)
