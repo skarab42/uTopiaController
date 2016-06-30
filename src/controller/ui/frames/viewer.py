@@ -39,7 +39,7 @@ class ViewerFrame(BaseViewerFrame, FrameMixin):
         if position is not None:
             self.SetPosition(position)
         self.Show()
-        self.ShowFullScreen(True)
+        self.ShowFullScreen(True, style=wx.FULLSCREEN_ALL)
         self._size = self.GetSize()
         self._position = self.GetPosition()
         self.Pub('on_open', size=self._size, position=self._position)
