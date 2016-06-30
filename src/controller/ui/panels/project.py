@@ -22,6 +22,7 @@ class ProjectPanel(BaseProjectPanel, FrameMixin):
     _name = 'project_panel'
     _project = None
     _debounce = None
+    _settings = None
 
     def __init__(self, parent, project):
         super(ProjectPanel, self).__init__(parent)
@@ -52,11 +53,13 @@ class ProjectPanel(BaseProjectPanel, FrameMixin):
         self.slice.Enable()
 
     def OnSettingsLoaded(self, settings):
+        self._settings = settings
         lastProject = settings.Get('lastProject')
         if lastProject:
             self.LoadProjectFromFolder(lastProject)
 
     def OnProjectLoaded(self, project):
+        self._settings.Set('lastProject', project.GetPath())
         self.EnableControls(True)
         self.slice.SetValue(0)
         self.ShowSlice(None)
