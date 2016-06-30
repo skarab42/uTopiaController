@@ -6,7 +6,6 @@ import os
 import sys
 import zipfile
 import shutil
-from threading import Timer as Timeout
 
 from controller.i18n import _
 from controller.ui.mixins import FrameMixin
@@ -21,7 +20,6 @@ from controller.project import ProjectException
 class ProjectPanel(BaseProjectPanel, FrameMixin):
     _name = 'project_panel'
     _project = None
-    _debounce = None
     _settings = None
 
     def __init__(self, parent, project):
@@ -164,10 +162,7 @@ class ProjectPanel(BaseProjectPanel, FrameMixin):
         self.Pub('on_update', project=self._project)
 
     def OnSettingsChange(self, event):
-        if self._debounce:
-            self._debounce.cancel()
-        self._debounce = Timeout(0.5, self.UpdateSettings)
-        self._debounce.start()
+        self.UpdateSettings()
 
     def ShowSlice(self, slice_num=None):
         slice_path = None

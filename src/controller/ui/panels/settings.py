@@ -1,8 +1,6 @@
 # coding: utf-8
 from __future__ import unicode_literals
 
-from threading import Timer as Timeout
-
 import wx
 
 from controller.i18n import _
@@ -18,7 +16,6 @@ class SettingsPanel(BaseSettingsPanel, FrameMixin):
     _name = 'settings_panel'
     _file_path = './settings.json'
     _settings = None
-    _debounce = None
 
     def __init__(self, parent, settings):
         super(SettingsPanel, self).__init__(parent)
@@ -116,10 +113,7 @@ class SettingsPanel(BaseSettingsPanel, FrameMixin):
         self.RefreshSettings()
 
     def OnSettingsChange(self, event):
-        if self._debounce:
-            self._debounce.cancel()
-        self._debounce = Timeout(0.5, self.UpdateSettings)
-        self._debounce.start()
+        self.UpdateSettings()
 
     def SavePresets(self, name):
         self.Log(_('Save current presets...'))
