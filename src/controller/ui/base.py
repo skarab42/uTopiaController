@@ -25,7 +25,7 @@ class MainFrame ( wx.Frame ):
 		self.SetSizeHintsSz( wx.DefaultSize, wx.DefaultSize )
 
 		self.main_sizer = wx.BoxSizer( wx.VERTICAL )
-		
+
 		self.main_panel = wx.Panel( self, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.TAB_TRAVERSAL )
 		self.panels_sizer = wx.BoxSizer( wx.VERTICAL )
 
@@ -61,7 +61,7 @@ class MainFrame ( wx.Frame ):
 class ViewerFrame ( wx.Frame ):
 
 	def __init__( self, parent ):
-		wx.Frame.__init__ ( self, parent, id = wx.ID_ANY, title = wx.EmptyString, pos = wx.DefaultPosition, size = wx.Size( 800,600 ), style = wx.STAY_ON_TOP|wx.NO_BORDER|wx.TAB_TRAVERSAL )
+		wx.Frame.__init__ ( self, parent, id = wx.ID_ANY, title = wx.EmptyString, pos = wx.DefaultPosition, size = wx.Size( 500,300 ), style = wx.DEFAULT_FRAME_STYLE|wx.TAB_TRAVERSAL )
 
 		self.SetSizeHintsSz( wx.DefaultSize, wx.DefaultSize )
 		self.SetBackgroundColour( wx.Colour( 0, 0, 0 ) )
