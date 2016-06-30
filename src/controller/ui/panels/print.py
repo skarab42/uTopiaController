@@ -8,6 +8,7 @@ import wx
 from controller.i18n import _
 from controller.ui.mixins import FrameMixin
 from controller.ui.base import PrintPanel as BasePrintPanel
+from controller.core.printer import PrinterException
 
 class PrintPanel(BasePrintPanel, FrameMixin):
     _name = 'print_panel'
@@ -212,12 +213,14 @@ class PrintPanel(BasePrintPanel, FrameMixin):
             return self.Error(_('Printer not connected !'))
         if self._printer.Printing():
             return self.Error(_('Job already started !'))
+        if not self._project or not self._project.Loaded():
+            return self.Error(_('No project loaded !'))
         try:
             self.start_stop.SetLabel(_('Wait...'))
             self.start_stop.Disable()
             self._elapsed_time = 0
             self._SendCommands()
-        except JobException as e:
+        except PrinterException as e:
             self.Error(unicode(e))
 
     def StopJob(self):
@@ -229,7 +232,7 @@ class PrintPanel(BasePrintPanel, FrameMixin):
                 self.pause_resume.Disable()
                 self.start_stop.Disable()
                 self._printer.Abort()
-            except JobException as e:
+            except PrinterException as e:
                 self.Error(unicode(e))
 
     def PauseJob(self):
@@ -240,7 +243,7 @@ class PrintPanel(BasePrintPanel, FrameMixin):
             self.pause_resume.Disable()
             self.start_stop.Disable()
             self._printer.Pause()
-        except JobException as e:
+        except PrinterException as e:
             self.Error(unicode(e))
 
     def ResumeJob(self):
@@ -249,7 +252,7 @@ class PrintPanel(BasePrintPanel, FrameMixin):
         try:
             self.start_stop.Enable()
             self._printer.Resume()
-        except JobException as e:
+        except PrinterException as e:
             self.Error(unicode(e))
 
     def OnStartStopClick(self, event):
