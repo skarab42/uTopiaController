@@ -34,12 +34,12 @@ class ViewerFrame(BaseViewerFrame, FrameMixin):
         self.slice.Show()
 
     def Open(self, size=None, position=None):
-        if size is not None:
-            self.SetSize((100, 100))
+        # if size is not None:
+        #     self.SetSize((100, 100))
         if position is not None:
             self.SetPosition(position)
-        self.Show()
-        # self.ShowFullScreen(True, style=wx.FULLSCREEN_ALL)
+        self.Show(True)
+        self.ShowFullScreen(True)
         self._size = self.GetSize()
         self._position = self.GetPosition()
         self.Pub('on_open', size=self._size, position=self._position)
@@ -57,19 +57,7 @@ class ViewerFrame(BaseViewerFrame, FrameMixin):
     def OnClose(self, event):
         self.Close()
 
-    def OnKeyDown(self, event):
-        event.Skip()
-        print 'OnKeyDown: %i' % event.GetKeyCode()
-
-    def OnChar(self, event):
-        event.Skip()
-        print 'OnChar: %i' % event.GetKeyCode()
-
     def OnKeyUp(self, event):
-        event.Skip()
-        print 'OnKeyUp: %i' % event.GetKeyCode()
-
-    def _OnKeyUp(self, event):
         keycode = event.GetKeyCode()
         if keycode == WXK_ESCAPE:
             self.Close()

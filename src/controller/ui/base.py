@@ -61,7 +61,7 @@ class MainFrame ( wx.Frame ):
 class ViewerFrame ( wx.Frame ):
 
 	def __init__( self, parent ):
-		wx.Frame.__init__ ( self, parent, id = wx.ID_ANY, title = wx.EmptyString, pos = wx.DefaultPosition, size = wx.Size( 500,300 ), style = wx.DEFAULT_FRAME_STYLE|wx.TAB_TRAVERSAL )
+		wx.Frame.__init__ ( self, parent, id = wx.ID_ANY, title = wx.EmptyString, pos = wx.DefaultPosition, size = wx.Size( 500,300 ), style = wx.FRAME_NO_TASKBAR|wx.FRAME_SHAPED|wx.STAY_ON_TOP|wx.NO_BORDER )
 
 		self.SetSizeHintsSz( wx.DefaultSize, wx.DefaultSize )
 		self.SetBackgroundColour( wx.Colour( 0, 0, 0 ) )
@@ -124,13 +124,13 @@ class PrinterPanel ( wx.Panel ):
 		self.printers.SetToolTipString( _(u"Printers list (serial ports)") )
 
 		printer_sizer.Add( self.printers, 1, wx.ALIGN_CENTER_VERTICAL|wx.TOP|wx.LEFT, 5 )
-
-		self.refresh = wx.BitmapButton( self, wx.ID_ANY, wx.Bitmap( u"././assets/refresh.png", wx.BITMAP_TYPE_ANY ), wx.DefaultPosition, wx.DefaultSize, wx.BU_AUTODRAW )
+		
+		self.refresh = wx.BitmapButton( self, wx.ID_ANY, wx.Bitmap( u"./assets/refresh.png", wx.BITMAP_TYPE_ANY ), wx.DefaultPosition, wx.DefaultSize, wx.BU_AUTODRAW )
 		self.refresh.SetToolTipString( _(u"Refresh printers list") )
 
 		printer_sizer.Add( self.refresh, 0, wx.ALIGN_CENTER_VERTICAL|wx.TOP|wx.RIGHT|wx.LEFT, 5 )
 
-		self.printer_on_off = wx.BitmapButton( self, wx.ID_ANY, wx.Bitmap( u"././assets/power-off.png", wx.BITMAP_TYPE_ANY ), wx.DefaultPosition, wx.DefaultSize, wx.BU_AUTODRAW )
+		self.printer_on_off = wx.BitmapButton( self, wx.ID_ANY, wx.Bitmap( u"./assets/power-off.png", wx.BITMAP_TYPE_ANY ), wx.DefaultPosition, wx.DefaultSize, wx.BU_AUTODRAW )
 
 		self.printer_on_off.SetBitmapSelected( wx.NullBitmap )
 		self.printer_on_off.SetToolTipString( _(u"Connect") )
@@ -240,12 +240,12 @@ class DisplayPanel ( wx.Panel ):
 
 		display_sizer.Add( self.displays, 1, wx.ALIGN_CENTER_VERTICAL|wx.TOP|wx.BOTTOM|wx.LEFT, 5 )
 
-		self.refresh = wx.BitmapButton( self, wx.ID_ANY, wx.Bitmap( u"././assets/refresh.png", wx.BITMAP_TYPE_ANY ), wx.DefaultPosition, wx.DefaultSize, wx.BU_AUTODRAW )
+		self.refresh = wx.BitmapButton( self, wx.ID_ANY, wx.Bitmap( u"./assets/refresh.png", wx.BITMAP_TYPE_ANY ), wx.DefaultPosition, wx.DefaultSize, wx.BU_AUTODRAW )
 		self.refresh.SetToolTipString( _(u"Refresh displays list") )
 
 		display_sizer.Add( self.refresh, 0, wx.ALIGN_CENTER_VERTICAL|wx.ALL, 5 )
 
-		self.open_close = wx.BitmapButton( self, wx.ID_ANY, wx.Bitmap( u"././assets/expand.png", wx.BITMAP_TYPE_ANY ), wx.DefaultPosition, wx.DefaultSize, wx.BU_AUTODRAW )
+		self.open_close = wx.BitmapButton( self, wx.ID_ANY, wx.Bitmap( u"./assets/expand.png", wx.BITMAP_TYPE_ANY ), wx.DefaultPosition, wx.DefaultSize, wx.BU_AUTODRAW )
 		self.open_close.SetToolTipString( _(u"Open viewer") )
 
 		display_sizer.Add( self.open_close, 0, wx.TOP|wx.BOTTOM|wx.RIGHT|wx.ALIGN_CENTER_VERTICAL, 5 )
@@ -516,12 +516,12 @@ class SettingsPanel ( wx.Panel ):
 		self.presets = wx.ComboBox( self, wx.ID_ANY, _(u"Defaults"), wx.DefaultPosition, wx.DefaultSize, presetsChoices, 0 )
 		bSizer36.Add( self.presets, 1, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5 )
 
-		self.save = wx.BitmapButton( self, wx.ID_ANY, wx.Bitmap( u"././assets/save.png", wx.BITMAP_TYPE_ANY ), wx.DefaultPosition, wx.DefaultSize, wx.BU_AUTODRAW )
+		self.save = wx.BitmapButton( self, wx.ID_ANY, wx.Bitmap( u"./assets/save.png", wx.BITMAP_TYPE_ANY ), wx.DefaultPosition, wx.DefaultSize, wx.BU_AUTODRAW )
 		self.save.SetToolTipString( _(u"Save presets") )
 
 		bSizer36.Add( self.save, 0, wx.TOP|wx.BOTTOM|wx.RIGHT, 5 )
 
-		self.delete = wx.BitmapButton( self, wx.ID_ANY, wx.Bitmap( u"././assets/trash.png", wx.BITMAP_TYPE_ANY ), wx.DefaultPosition, wx.DefaultSize, wx.BU_AUTODRAW )
+		self.delete = wx.BitmapButton( self, wx.ID_ANY, wx.Bitmap( u"./assets/trash.png", wx.BITMAP_TYPE_ANY ), wx.DefaultPosition, wx.DefaultSize, wx.BU_AUTODRAW )
 		self.delete.SetToolTipString( _(u"Delete presets") )
 
 		bSizer36.Add( self.delete, 0, wx.TOP|wx.BOTTOM|wx.RIGHT, 5 )
