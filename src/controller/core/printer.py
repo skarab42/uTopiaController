@@ -6,7 +6,7 @@ from threading import Event as Flag
 
 from serial.tools import list_ports as list_ports
 from serial import Serial, SerialException
-from wx.lib.pubsub import pub
+from wx.lib.pubsub import setupkwargs, pub
 
 from controller.i18n import _
 from controller.core.daemon import Daemon

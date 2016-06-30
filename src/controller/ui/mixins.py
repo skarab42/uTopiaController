@@ -2,7 +2,7 @@
 from __future__ import unicode_literals
 
 import wx
-from wx.lib.pubsub import pub
+from wx.lib.pubsub import setupkwargs, pub
 
 from controller.i18n import _
 
