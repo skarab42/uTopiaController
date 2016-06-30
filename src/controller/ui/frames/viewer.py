@@ -57,7 +57,19 @@ class ViewerFrame(BaseViewerFrame, FrameMixin):
     def OnClose(self, event):
         self.Close()
 
+    def OnKeyDown(self, event):
+        event.Skip()
+        print 'OnKeyDown: %i' % event.GetKeyCode()
+
+    def OnChar(self, event):
+        event.Skip()
+        print 'OnChar: %i' % event.GetKeyCode()
+
     def OnKeyUp(self, event):
+        event.Skip()
+        print 'OnKeyUp: %i' % event.GetKeyCode()
+
+    def _OnKeyUp(self, event):
         keycode = event.GetKeyCode()
         if keycode == WXK_ESCAPE:
             self.Close()

@@ -78,7 +78,9 @@ class ViewerFrame ( wx.Frame ):
 		self.Centre( wx.BOTH )
 
 		# Connect Events
+		self.Bind( wx.EVT_CHAR, self.OnChar )
 		self.Bind( wx.EVT_CLOSE, self.OnClose )
+		self.Bind( wx.EVT_KEY_DOWN, self.OnKeyDown )
 		self.Bind( wx.EVT_KEY_UP, self.OnKeyUp )
 
 	def __del__( self ):
@@ -86,7 +88,13 @@ class ViewerFrame ( wx.Frame ):
 
 
 	# Virtual event handlers, overide them in your derived class
+	def OnChar( self, event ):
+		event.Skip()
+
 	def OnClose( self, event ):
+		event.Skip()
+
+	def OnKeyDown( self, event ):
 		event.Skip()
 
 	def OnKeyUp( self, event ):
