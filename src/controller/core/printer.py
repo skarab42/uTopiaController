@@ -189,6 +189,8 @@ class Printer(object):
         self.Pub('on_response', name=name, command=command, response=response, args=args)
 
     def OnReadLine(self, response):
+        if not self._last_command:
+            return None
         name, command, args = self._last_command
         self.OnResponse(name, command, response, args)
         if self._pause_after == name:
