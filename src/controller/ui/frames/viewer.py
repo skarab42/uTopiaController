@@ -34,14 +34,13 @@ class ViewerFrame(BaseViewerFrame, FrameMixin):
         self.slice.Show()
 
     def Open(self, size=None, position=None):
-        # if size is not None:
-        #     self.SetSize((100, 100))
+        if size is not None:
+            self.SetSize(size)
         if position is not None:
             self.SetPosition(position)
         self.Show(True)
         self.ShowFullScreen(True)
         self._size = self.GetSize()
-        print self._size
         self._position = self.GetPosition()
         self.Pub('on_open', size=self._size, position=self._position)
         parent_display_id = Display.GetFromWindow(self._parent)
