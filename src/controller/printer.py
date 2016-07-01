@@ -55,22 +55,26 @@ class Printer(CorePrinter):
         self.SendCommand('relative_mode', 'G91')
 
     def SendMotorOn(self):
-        self.SendCommand('motor_on', 'M17 M400')
+        self.SendCommand('_motor_on', 'M17')
+        self.SendCommand('motor_on', 'M400')
 
     def SendMotorOff(self):
-        self.SendCommand('motor_off', 'M18 M400')
+        self.SendCommand('_motor_off', 'M18')
+        self.SendCommand('motor_off', 'M400')
+
+    def SendLightOn(self):
+        self.SendCommand('_light_on', 'M106')
+        self.SendCommand('light_on', 'M400')
+
+    def SendLightOff(self):
+        self.SendCommand('_light_off', 'M107')
+        self.SendCommand('light_off', 'M400')
 
     def SendPrintStart(self):
         self.SendCommand('print_start', 'M400')
 
     def SendPrintEnd(self):
         self.SendCommand('print_end', 'M400')
-
-    def SendLightOn(self):
-        self.SendCommand('light_on', 'M106 M400')
-
-    def SendLightOff(self):
-        self.SendCommand('light_off', 'M107 M400')
 
     def SendShowSlice(self, num):
         self.SendCommand('show_slice', 'M400', num)
@@ -82,10 +86,12 @@ class Printer(CorePrinter):
         self.SendCommand('wait', 'G4 P%i' % milliseconds)
 
     def SendLiftUp(self, offset, speed):
-        self.SendCommand('lift_up', 'G1 Z%f F%i M400' % (offset, speed))
+        self.SendCommand('_lift_up', 'G1 Z%f F%i' % (offset, speed))
+        self.SendCommand('lift_up', 'M400')
 
     def SendLiftDown(self, offset, speed):
-        self.SendCommand('lift_down', 'G1 Z-%f F%i M400' % (offset, speed))
+        self.SendCommand('_lift_down', 'G1 Z-%f F%i' % (offset, speed))
+        self.SendCommand('lift_down', 'M400')
 
     def OnResponse(self, name, command, response, args):
         if name == 'motor_on':
