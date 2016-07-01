@@ -7,4 +7,5 @@ Serial controller for the µTopiaPrinter.
   * wxPython
 
 ## Screenshot
-![Screenshot](/screenshot.png?raw=true)
+![Screenshot](/screenshot_unbuntu.png?raw=true)
+![Screenshot](/screenshot_windows.png?raw=true)
