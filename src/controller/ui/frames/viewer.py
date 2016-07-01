@@ -41,6 +41,7 @@ class ViewerFrame(BaseViewerFrame, FrameMixin):
         self.Show(True)
         self.ShowFullScreen(True)
         self._size = self.GetSize()
+        print self._size
         self._position = self.GetPosition()
         self.Pub('on_open', size=self._size, position=self._position)
         parent_display_id = Display.GetFromWindow(self._parent)
