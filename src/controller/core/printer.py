@@ -4,6 +4,7 @@ from __future__ import unicode_literals
 from Queue import Queue
 from threading import Event as Flag
 
+from wx import CallAfter
 from serial.tools import list_ports as list_ports
 from serial import Serial, SerialException
 
@@ -30,8 +31,8 @@ class PrinterReader(Daemon):
     def loop(self):
         line = self._printer.ReadLine()
         if line:
-            self._printer.OnReadLine(line.strip())
-            self._printer._waiting_response.clear()
+            CallAfter(self._printer.OnReadLine, line.strip())
+            CallAfter(self._printer._waiting_response.clear)
 
 class PrinterWriter(Daemon):
     _printer = None
@@ -46,11 +47,10 @@ class PrinterWriter(Daemon):
         if self._printer._waiting_response.isSet():
             return None
         if not self._printer._commands_queue.empty():
-            name, command, args = self._printer._commands_queue.get()
-            self._printer._last_command = (name, command, args)
-            self._printer.OnCommand(name, command, args)
             self._printer._waiting_response.set()
-            self._printer.Write(command)
+            name, command, args = self._printer._commands_queue.get()
+            CallAfter(self._printer.OnCommand, name, command, args)
+            CallAfter(self._printer.Write, command)
 
 # pubsub topics:
 # - printer.on_command(name, command, args)
@@ -183,6 +183,7 @@ class Printer(object):
         return self._serial.readline()
 
     def OnCommand(self, name, command, args):
+        self._last_command = (name, command, args)
         self.Pub('on_command', name=name, command=command, args=args)
 
     def OnResponse(self, name, command, response, args):
