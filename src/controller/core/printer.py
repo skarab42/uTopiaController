@@ -218,5 +218,17 @@ class Printer(object):
         if self._abort_after == name:
             self.Abort(None)
 
+    _gcode = None
+
     def SendCommand(self, name, command, args=None):
+        if name == 'print_start':
+            self._gcode = []
+        elif name == 'print_end':
+            gcode = '\n'.join(self._gcode)
+            dumpfile = open('./dump.gcode', 'w')
+            dumpfile.write(gcode)
+            dumpfile.close()
+            self._gcode = None
+        if self._gcode is not None:
+            self._gcode.append(command)
         self._commands_queue.put((name, command, args))
