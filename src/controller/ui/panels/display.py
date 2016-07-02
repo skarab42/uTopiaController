@@ -96,6 +96,7 @@ class DisplayPanel(BaseDisplayPanel, FrameMixin):
 
     def OnPrintStart(self):
         self.OpenViewer()
+        self.ShowSlice()
 
     def OnClose(self):
         if self._viewer.IsShown():
