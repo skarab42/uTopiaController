@@ -84,7 +84,7 @@ class ProjectPanel(BaseProjectPanel, FrameMixin):
         lifting_speed = int(self._project.GetSetting('liftingSpeed'))
         lifting_height = float(self._project.GetSetting('liftingHeight'))
         lifting_offset = float(lifting_height - layers_height)
-        total_height = layers_number * layers_height
+        total_height = layers_number * layers_height / 10
         self._project.SetSetting('totalHeight', total_height)
         self._project.SetSetting('liftingOffset', lifting_offset)
         self.total_height.SetLabel(str(total_height))
