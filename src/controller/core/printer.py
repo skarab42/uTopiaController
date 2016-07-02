@@ -6,14 +6,26 @@ from threading import Event as Flag
 
 from wx import CallAfter
 from serial.tools import list_ports as list_ports
-from serial import Serial, SerialException
+from serial import Serial, SerialException, PARITY_ODD, PARITY_NONE
 
 from controller.i18n import _
 from controller.pubsub import pubsub
 from controller.core.daemon import Daemon
 
+comports_prefixs = ['com',
+                 '/dev/ttyusb',
+                 '/dev/ttyacm',
+                 '/dev/tty.',
+                 '/dev/cu.',
+                 '/dev/rfcomm']
+
 def ListPrinters():
-    return list_ports.comports()
+    comports = []
+    for name, description, harware in list_ports.comports():
+        for prefix in comports_prefixs:
+            if name.lower().startswith(prefix):
+                comports.append((name, description, harware))
+    return comports
 
 class PrinterException(Exception):
     def __init__(self, message, args=None):
@@ -149,14 +161,21 @@ class Printer(object):
         try:
             self.ClearPrinter()
             self.Pub('on_connect', port=port, baudrate=baudrate)
-            self._serial = Serial(port, baudrate, timeout=self._timeout)
+            # https://github.com/kliment/Printrun/blob/8c046755063025b6b582d9579bdbdc1edfbda520/printrun/printcore.py#L196
+            self._serial = Serial(port=port,
+                                  baudrate=baudrate,
+                                  timeout=self._timeout,
+                                  parity=PARITY_ODD)
+            self._serial.close()
+            self._serial.parity = PARITY_NONE
+            self._serial.open()
             self._baudrate = self._serial.baudrate
             self._port = self._serial.port
             self._connected = True
-            self._writer_daemon = PrinterWriter(self)
             self._reader_daemon = PrinterReader(self)
-            self._writer_daemon.start()
             self._reader_daemon.start()
+            self._writer_daemon = PrinterWriter(self)
+            self._writer_daemon.start()
         except SerialException as e:
             self.Error(unicode(e))
         self.Pub('on_connected', port=self._port, baudrate=self._baudrate)
