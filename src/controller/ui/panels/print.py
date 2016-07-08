@@ -148,15 +148,13 @@ class PrintPanel(BasePrintPanel, FrameMixin):
         lg3 = self._settings.Get('layersGroup.3')
         layer_num = 0
         def SendCommand(exposure_time):
-            self._printer.SendLiftUp(lifting_height, lifting_speed)
-            self._printer.SendLiftDown(lifting_offset, lifting_speed)
-            self._printer.SendShowSlice(layer_num)
+            self._printer.SendLiftUp(lifting_height)
+            self._printer.SendLiftDown(lifting_offset)
             self._printer.SendLightOn()
-            self._printer.SendWait(exposure_time)
+            self._printer.SendWait(exposure_time, layer_num)
             self._printer.SendLightOff()
-            self._printer.SendHideSlice(layer_num)
         self._printer.SendPrintStart()
-        self._printer.SendRelativeMode()
+        self._printer.SendSetLiftingSpeed(lifting_speed)
         if lg1['enable']:
             for layer in range(lg1['layers']):
                 layer_num += 1
