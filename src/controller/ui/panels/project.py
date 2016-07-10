@@ -30,8 +30,8 @@ class ProjectPanel(BaseProjectPanel, FrameMixin):
         self.Sub('printer.on_print_start', self.OnPrintStart)
         self.Sub('printer.on_print_end', self.OnPrintEnd)
         self.Sub('printer.on_aborted', self.OnPrintEnd)
-        self.Sub('printer.on_command_light_on', self.OnPrinterShowSlice)
-        self.Sub('printer.on_command_light_off', self.OnPrinterHideSlice)
+        self.Sub('printer.on_command_wait', self.OnPrinterShowSlice)
+        self.Sub('printer.on_response_wait', self.OnPrinterHideSlice)
         self.Sub('printer.on_aborted', self.OnPrintEnd)
         self.Sub('main_frame.on_close', self.OnClose)
 
@@ -181,7 +181,7 @@ class ProjectPanel(BaseProjectPanel, FrameMixin):
         self.slice.SetValue(args)
         self.ShowSlice(args)
 
-    def OnPrinterHideSlice(self, command, args):
+    def OnPrinterHideSlice(self, command, response, args):
         if not args:
             return None
         self.ShowSlice(0)

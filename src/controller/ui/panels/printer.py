@@ -59,6 +59,9 @@ class PrinterPanel(BasePrinterPanel, FrameMixin):
         self.SetButtonBitmap(self.printer_on_off, 'power-on')
         self.printer_on_off.SetToolTipString(_('Disconnect'))
         self.Log(_('Connected to %s at %i BPS'), (port, baudrate))
+        self._printer.SendRelativeMode()
+        self._printer.SendMotorOff()
+        self._printer.SendLightOff()
 
     def Connect(self):
         try:

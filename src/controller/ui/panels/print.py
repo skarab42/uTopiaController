@@ -150,11 +150,9 @@ class PrintPanel(BasePrintPanel, FrameMixin):
         def SendCommand(exposure_time):
             self._printer.SendLiftUp(lifting_height)
             self._printer.SendLiftDown(lifting_offset)
-            self._printer.SendLightOn(layer_num)
-            self._printer.SendWait(exposure_time)
-            self._printer.SendLightOff(layer_num)
-        self._printer.SendMotorOn()
-        self._printer.SendLightOff()
+            self._printer.SendLightOn()
+            self._printer.SendWait(exposure_time, layer_num)
+            self._printer.SendLightOff()
         self._printer.SendPrintStart()
         self._printer.SendSetLiftingSpeed(lifting_speed)
         if lg1['enable']:
