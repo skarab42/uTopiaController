@@ -51,41 +51,44 @@ class Printer(CorePrinter):
     def LightOff(self):
         return not self.LightOn()
 
-    def SendPrintStart(self):
-        self.SendCommand('print_start', 'print_start')
+    def SendRelativeMode(self):
+        self.SendCommand('relative_mode', 'G91')
 
-    def SendPrintEnd(self):
-        self.SendCommand('print_end', 'print_end')
+    def SendPrintStart(self):
+        self.SendCommand('print_start', 'G91')
 
     def SendSetLiftingSpeed(self, speed):
-        self.SendCommand('set_lifting_speed', 'lift 0 %i' % speed)
+        self.SendCommand('set_lifting_speed', 'G1 Z0 F%i' % speed)
+
+    def SendPrintEnd(self):
+        self.SendCommand('print_end', 'M117 End of print')
 
     def SendMotorOn(self):
-        self.SendCommand('motor_on', 'motor on')
+        self.SendCommand('motor_on', 'M17')
 
     def SendMotorOff(self):
-        self.SendCommand('motor_off', 'motor off')
+        self.SendCommand('motor_off', 'M18')
 
-    def SendLightOn(self, layer=None):
-        self.SendCommand('light_on', 'light on', layer)
+    def SendLightOn(self):
+        self.SendCommand('light_on', 'M106')
 
-    def SendLightOff(self, layer=None):
-        self.SendCommand('light_off', 'light off', layer)
+    def SendLightOff(self):
+        self.SendCommand('light_off', 'M107')
 
-    def SendWait(self, milliseconds):
-        self.SendCommand('wait', 'wait %i' % milliseconds)
+    def SendWait(self, milliseconds, layer_num=0):
+        self.SendCommand('wait', 'G4 P%i' % milliseconds, layer_num)
 
     def SendLiftUp(self, offset, speed=None):
         if speed is None:
-            self.SendCommand('lift_up', 'lift %.2f' % offset)
+            self.SendCommand('lift_up', 'G1 Z%.2f' % offset)
         else:
-            self.SendCommand('lift_up', 'lift %.2f %i' % (offset, speed))
+            self.SendCommand('lift_up', 'G1 Z%.2f F%i' % (offset, speed))
 
     def SendLiftDown(self, offset, speed=None):
         if speed is None:
-            self.SendCommand('lift_down', 'lift -%.2f' % offset)
+            self.SendCommand('lift_down', 'G1 Z-%.2f' % offset)
         else:
-            self.SendCommand('lift_down', 'lift -%.2f %i' % (offset, speed))
+            self.SendCommand('lift_down', 'G1 Z-%.2f F%i' % (offset, speed))
 
     def OnResponse(self, name, command, response, args):
         if name == 'motor_on':
