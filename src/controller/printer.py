@@ -70,13 +70,14 @@ class Printer(CorePrinter):
         self.SendCommand('motor_off', 'M18')
 
     def SendLightOn(self):
-        self.SendCommand('light_on', 'M106')
+        self.SendCommand('light_on', 'M8')
 
     def SendLightOff(self):
-        self.SendCommand('light_off', 'M107')
+        self.SendCommand('light_off', 'M9')
 
     def SendWait(self, milliseconds, layer_num=0):
-        self.SendCommand('wait', 'G4 P%i' % milliseconds, layer_num)
+        # self.SendCommand('wait', 'G4 P%i' % milliseconds, layer_num)
+        self.SendCommand('wait', milliseconds, layer_num)
 
     def SendLiftUp(self, offset, speed=None):
         if speed is None:
