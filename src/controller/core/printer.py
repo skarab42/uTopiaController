@@ -64,7 +64,6 @@ class PrinterWriter(Daemon):
             name, command, args = self._printer._commands_queue.get()
             CallAfter(self._printer.OnCommand, name, command, args)
             if name == 'wait':
-                print 'ms: %s' % command
                 time.sleep(command / 1000)
                 CallAfter(self._printer.OnReadLine, 'ok')
                 CallAfter(self._printer._waiting_response.clear)
