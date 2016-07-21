@@ -61,32 +61,28 @@ class PrintPanel(BasePrintPanel, FrameMixin):
         self._project = project
 
     def EstimateTime(self):
-        first_layers_time = 0
-        first_layers_count = 0
-        group1 = self._settings.Get('layersGroup.1')
-        group2 = self._settings.Get('layersGroup.2')
-        group3 = self._settings.Get('layersGroup.3')
         layers_number = self._project.GetSetting('layersNumber')
         exposure_time = self._project.GetSetting('exposureTime')
         lifting_speed = self._project.GetSetting('liftingSpeed')
         lifting_height = self._project.GetSetting('liftingHeight')
         lifting_offset = self._project.GetSetting('liftingOffset')
-        if group1['enable']:
-            first_layers_count += group1['layers']
-            first_layers_time += (group1['layers'] * group1['exposureTime'])
-        if group2['enable']:
-            first_layers_count += group2['layers']
-            first_layers_time += (group2['layers'] * group2['exposureTime'])
-        if group3['enable']:
-            first_layers_count += group3['layers']
-            first_layers_time += (group3['layers'] * group3['exposureTime'])
-        if first_layers_count:
-            first_layers_time -= (exposure_time * first_layers_count)
-        lifting_length = lifting_height - (lifting_offset / 2)
-        lifting_time = (60000 / (lifting_speed / lifting_length)) * 2;
-        one_slice_time = lifting_time + exposure_time + 250
+        lifting_length = lifting_height + lifting_offset
+        lifting_time = 60000 / (lifting_speed / lifting_length);
+        one_slice_time = lifting_time + exposure_time
         estimated_time = one_slice_time * layers_number
-        seconds = (estimated_time + first_layers_time) / 1000
+        group1 = self._settings.Get('layersGroup.1')
+        group2 = self._settings.Get('layersGroup.2')
+        group3 = self._settings.Get('layersGroup.3')
+        if group1['enable']:
+            group1_exposure_time = group1['exposureTime'] - exposure_time
+            estimated_time += (group1['layers'] * group1_exposure_time)
+        if group2['enable']:
+            group2_exposure_time = group1['exposureTime'] - exposure_time
+            estimated_time += (group2['layers'] * group2_exposure_time)
+        if group3['enable']:
+            group3_exposure_time = group1['exposureTime'] - exposure_time
+            estimated_time += (group3['layers'] * group3_exposure_time)
+        seconds = estimated_time / 1000
         return seconds
 
     def GetTime(self, seconds):
