@@ -1,6 +1,7 @@
 # coding: utf-8
 from __future__ import unicode_literals
 
+import time
 from Queue import Queue
 from threading import Event as Flag
 
@@ -62,7 +63,12 @@ class PrinterWriter(Daemon):
             self._printer._waiting_response.set()
             name, command, args = self._printer._commands_queue.get()
             CallAfter(self._printer.OnCommand, name, command, args)
-            CallAfter(self._printer.Write, command)
+            if name == 'wait':
+                time.sleep(command / 1000)
+                CallAfter(self._printer.OnReadLine, 'ok')
+                CallAfter(self._printer._waiting_response.clear)
+            else:
+                CallAfter(self._printer.Write, command)
 
 # pubsub topics:
 # - printer.on_command(name, command, args)

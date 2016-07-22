@@ -2,6 +2,7 @@
 from __future__ import unicode_literals
 
 import wx
+import time
 
 from controller.i18n import _
 from controller.ui.mixins import FrameMixin
@@ -59,9 +60,8 @@ class PrinterPanel(BasePrinterPanel, FrameMixin):
         self.SetButtonBitmap(self.printer_on_off, 'power-on')
         self.printer_on_off.SetToolTipString(_('Disconnect'))
         self.Log(_('Connected to %s at %i BPS'), (port, baudrate))
+        time.sleep(2) # Wait for Grbl header
         self._printer.SendRelativeMode()
-        self._printer.SendMotorOff()
-        self._printer.SendLightOff()
 
     def Connect(self):
         try:
