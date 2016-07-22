@@ -1,5 +1,5 @@
-# µTopiaController
-Serial controller for the #µTopiaPrinter.
+# uTopiaController
+Serial controller for the uTopiaPrinter.
 
 ## Dependencies
   * python 2.7.x
